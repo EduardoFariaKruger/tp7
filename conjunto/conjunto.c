@@ -235,41 +235,39 @@ struct conjunto *copia_cjt (struct conjunto *c)
  */
 struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
 {
-    struct conjunto *novo;
-
-    if (n >= c->card)
-    {
-        novo = copia_cjt(c);
+    if (n < 0 || n > c->card) {
+        return NULL; // Verifica se n está dentro dos limites válidos
     }
-    else if (n == 0)
-    {
-        novo = cria_cjt(0); // Corrigindo para criar um conjunto vazio
-    }
-    else
-    {
-        novo = cria_cjt(n);
-        if (novo == NULL)
-        {
-            return NULL;
-        }
 
+    struct conjunto *novo = cria_cjt(n);
+    if (novo == NULL) {
+        return NULL; // Falha na criação do novo conjunto
+    }
+
+    if (n > 0) {
         int *temp = malloc(c->card * sizeof(int));
-
-        if (temp == NULL)
-        {
+        if (temp == NULL) {
             free(novo);
-            return NULL;
+            return NULL; // Falha na alocação de memória temporária
         }
 
-        for (int i = 0; i < c->card; i++)
-        {
+        // Inicializa temp com os elementos do conjunto original
+        for (int i = 0; i < c->card; i++) {
             temp[i] = (c->v)[i];
         }
 
-        for (int i = 0; i < n; i++)
-        {
-            int index = rand() % c->card;
-            (novo->v)[i] = temp[index];
+        // Embaralha os elementos de temp (técnica de Fisher-Yates)
+        for (int i = c->card - 1; i > 0; i--) {
+            int j = rand() % (i + 1);
+            // Troca temp[i] e temp[j]
+            int temp_val = temp[i];
+            temp[i] = temp[j];
+            temp[j] = temp_val;
+        }
+
+        // Copia os primeiros n elementos embaralhados para o novo conjunto
+        for (int i = 0; i < n; i++) {
+            (novo->v)[i] = temp[i];
         }
 
         free(temp);
