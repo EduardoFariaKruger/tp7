@@ -6,16 +6,17 @@
  * Cria um conjunto vazio e o retorna, se falhar retorna NULL.
  * max eh o tamanho maximo do conjunto, isto eh, o tamanho maximo do vetor
  */
-struct conjunto *cria_cjt (int max)
+struct conjunto *cria_cjt(int max)
 {
     struct conjunto *conjunto;
-    if(!(conjunto = malloc(sizeof(struct conjunto))))
+    if (!(conjunto = malloc(sizeof(struct conjunto))))
     {
         return NULL;
     }
     int *v;
-    if(!(v = (int*) malloc(max * sizeof(int))))
+    if (!(v = (int *)malloc(max * sizeof(int))))
     {
+        free(conjunto);
         return NULL;
     }
     conjunto->max = max;
@@ -28,8 +29,12 @@ struct conjunto *cria_cjt (int max)
 /*
  * Remove todos os elementos do conjunto, libera espaco e devolve NULL.
  */
-struct conjunto *destroi_cjt (struct conjunto *c)
+struct conjunto *destroi_cjt(struct conjunto *c)
 {
+    if (c == NULL)
+    {
+        return NULL;
+    }
     free(c->v);
     free(c);
     return NULL;
@@ -249,7 +254,13 @@ struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
         }
         for (int i = 0; i <= n - 1; i++)
         {
-            insere_cjt(novo, (c->v)[rand() % c->card]); // <-- Corrigindo para usar c->card
+            int elemento = (c->card > 0) ? (c->v)[rand() % c->card] : 0; // Evita divisão por zero
+            if (!insere_cjt(novo, elemento))
+            {
+                free(novo->v);
+                free(novo);
+                return NULL;
+            }
         }
     }
     return novo;
