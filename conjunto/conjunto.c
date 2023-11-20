@@ -28,12 +28,8 @@ struct conjunto *cria_cjt (int max)
 /*
  * Remove todos os elementos do conjunto, libera espaco e devolve NULL.
  */
-struct conjunto *destroi_cjt(struct conjunto *c)
+struct conjunto *destroi_cjt (struct conjunto *c)
 {
-    if (c == NULL)
-    {
-        return NULL;
-    }
     free(c->v);
     free(c);
     return NULL;
@@ -233,46 +229,27 @@ struct conjunto *copia_cjt (struct conjunto *c)
  * Se n >= cardinalidade (c) entao retorna o proprio conjunto c.
  * Supoe que a funcao srand () tenha sido chamada antes.
  */
-struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
+struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
 {
-    if (n < 0 || n > c->card) {
-        return NULL; // Verifica se n está dentro dos limites válidos
+
+    struct conjunto *novo;
+    if(n >= c->card)
+    {
+        novo = copia_cjt(c);
     }
-
-    struct conjunto *novo = cria_cjt(n);
-    if (novo == NULL) {
-        return NULL; // Falha na criação do novo conjunto
+    if(n == 0)
+    {
+        novo = cria_cjt(n);
     }
-
-    if (n > 0) {
-        int *temp = malloc(c->card * sizeof(int));
-        if (temp == NULL) {
-            free(novo);
-            return NULL; // Falha na alocação de memória temporária
-        }
-
-        // Inicializa temp com os elementos do conjunto original
-        for (int i = 0; i < c->card; i++) {
-            temp[i] = (c->v)[i];
-        }
-
-        // Embaralha os elementos de temp (técnica de Fisher-Yates)
-        for (int i = c->card - 1; i > 0; i--) {
-            int j = rand() % (i + 1);
-            // Troca temp[i] e temp[j]
-            int temp_val = temp[i];
-            temp[i] = temp[j];
-            temp[j] = temp_val;
-        }
-
-        // Copia os primeiros n elementos embaralhados para o novo conjunto
-        for (int i = 0; i < n; i++) {
-            (novo->v)[i] = temp[i];
-        }
-
-        free(temp);
+    novo = cria_cjt(n);
+    if(novo == NULL)
+    {
+        return NULL;
     }
-
+    for(int i = 0; i <= n-1; i++)
+    {
+        insere_cjt(novo, (c->v)[rand() % n + 1]);
+    }
     return novo;
 }
 
