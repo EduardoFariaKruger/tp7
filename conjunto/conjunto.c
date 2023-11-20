@@ -259,40 +259,22 @@ struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
  * em branco entre os elementos, sendo que apos o ultimo nao
  * deve haver espacos em branco. Ao final imprime um \n.
  */
-void imprime_cjt(struct conjunto *c)
+void imprime_cjt (struct conjunto *c)
 {
-    // Cria uma cópia temporária do vetor interno
-    int *temp = malloc(c->card * sizeof(int));
-    if (temp == NULL) {
-        // Tratamento de erro ao alocar memória
-        fprintf(stderr, "Erro ao alocar memória para a cópia temporária.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    // Copia os elementos para a cópia temporária
-    for (int i = 0; i < c->card; i++) {
-        temp[i] = c->v[i];
-    }
-
-    // Aplica o algoritmo de ordenação Insertion Sort na cópia temporária
-    for (int i = 1; i < c->card; i++) {
-        int key = temp[i];
+    for (int i = 1; i < c->card; i++)
+    {
+        (c->v)[0] = (c->v)[i];
         int j = i - 1;
-        while (j >= 0 && temp[j] > key) {
-            temp[j + 1] = temp[j];
-            j = j - 1;
+        while ((c->v)[0] < (c->v)[j]) {
+        (c->v)[j + 1] = (c->v)[j];
+        j--;
         }
-        temp[j + 1] = key;
+        (c->v)[j + 1] = (c->v)[0];
     }
-
-    // Imprime os elementos ordenados
-    for (int i = 0; i < c->card; i++) {
-        printf("%d ", temp[i]);
+    for (int i = 0; i < c->card; i++)
+    {
+        printf("%d \n", (c->v)[i]);
     }
-    printf("\n");
-
-    // Libera a memória alocada para a cópia temporária
-    free(temp);
 }
 
 /*
