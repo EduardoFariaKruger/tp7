@@ -144,7 +144,7 @@ struct conjunto *diferenca_cjt (struct conjunto *c1, struct conjunto *c2)
     {
         if(!pertence_cjt(c2, (c1->v)[i]))
         {
-            insere_cjt(novo, (c1->v)[(c1->v)[i]]);
+            insere_cjt(novo, (c1->v)[i]);
         }
     }
     return novo;
