@@ -241,14 +241,17 @@ struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
     {
         novo = cria_cjt(n);
     }
-    novo = cria_cjt(n);
-    if(novo == NULL)
+    else
     {
-        return NULL;
-    }
-    for(int i = 0; i <= n-1; i++)
-    {
-        insere_cjt(novo, (c->v)[rand() % n + 1]);
+        novo = cria_cjt(c->max);
+        if(novo == NULL)
+        {
+            return NULL;
+        }
+        for(int i = 0; i <= n-1; i++)
+        {
+            insere_cjt(novo, (c->v)[rand() % n + 1]);
+        }
     }
     return novo;
 }
