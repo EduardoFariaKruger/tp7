@@ -121,7 +121,7 @@ int contido_cjt (struct conjunto *c1, struct conjunto *c2)
             pertence = 0;
         }
     }
-    return (pertence == 1);
+    return (pertence);
 }
 
 /*
@@ -139,7 +139,7 @@ int sao_iguais_cjt (struct conjunto *c1, struct conjunto *c2)
 struct conjunto *diferenca_cjt (struct conjunto *c1, struct conjunto *c2)
 {
     struct conjunto *novo;
-    novo = cria_cjt(c1->card - 1);
+    novo = cria_cjt(c1->card);
     for (int i = 0; i < c1->card -1; i++)
     {
         if(!pertence_cjt(c2, (c1->v)[i]))
@@ -159,8 +159,8 @@ struct conjunto *interseccao_cjt (struct conjunto *c1, struct conjunto *c2)
     struct conjunto *novo;
     if (c1->card > c2->card)
     {
-        novo = cria_cjt(c1->card - 1);
-        for (int i = 0; i < c1->card -1; i++)
+        novo = cria_cjt(c1->card);
+        for (int i = 0; i < c1->card; i++)
         {
             if(pertence_cjt(c2, (c1->v)[i]))
             {
@@ -170,8 +170,8 @@ struct conjunto *interseccao_cjt (struct conjunto *c1, struct conjunto *c2)
     }
     else
     {
-        novo = cria_cjt(c2->card - 1);
-        for (int i = 0; i < c2->card -1; i++)
+        novo = cria_cjt(c2->card);
+        for (int i = 0; i < c2->card; i++)
         {
             if(pertence_cjt(c1, (c2->v)[i]))
             {
@@ -189,12 +189,12 @@ struct conjunto *interseccao_cjt (struct conjunto *c1, struct conjunto *c2)
 struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2)
 {
     struct conjunto *novo;
-    novo = cria_cjt(c1->card - 1);
-    for (int i = 0; i < c1->card -1; i++)
+    novo = cria_cjt(c1->card);
+    for (int i = 0; i < c1->card; i++)
     {
         insere_cjt(novo, (c1->v)[(c1->v)[i]]);
     }
-    for (int i = 0; i < c2->card -1; i++)
+    for (int i = 0; i < c2->card; i++)
     {
         insere_cjt(novo, (c1->v)[(c2->v)[i]]);
     }
