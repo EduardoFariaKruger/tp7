@@ -259,25 +259,27 @@ struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
  * em branco entre os elementos, sendo que apos o ultimo nao
  * deve haver espacos em branco. Ao final imprime um \n.
  */
-void imprime_cjt (struct conjunto *c)
-{
+void imprime_cjt(struct conjunto *c) {
     int i, key, j;
+
+    // Aplica o algoritmo de ordenação Insertion Sort
     for (i = 1; i < c->card; i++) {
         key = (c->v)[i];
         j = i - 1;
 
-        // Move os elementos do arr[0..i-1] que são maiores que key
-        // para uma posição à frente de sua posição atual
         while (j >= 0 && (c->v)[j] > key) {
             (c->v)[j + 1] = (c->v)[j];
             j = j - 1;
         }
+
         (c->v)[j + 1] = key;
     }
-    for (int i = 0; i < c->card; i++)
-    {
-        printf("%d \n", (c->v)[i]);
+
+    // Imprime os elementos ordenados
+    for (int i = 0; i < c->card; i++) {
+        printf("%d ", (c->v)[i]);
     }
+    printf("\n");
 }
 
 /*
