@@ -190,11 +190,11 @@ struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2)
 {
     struct conjunto *novo;
     novo = cria_cjt(c1->max);
-    for (int i = 0; i < c1->card - 1; i++)
+    for (int i = 0; i < c1->card; i++)
     {
         insere_cjt(novo, (c1->v)[i]);
     }
-    for (int i = 0; i < c2->card - 1; i++)
+    for (int i = 0; i < c2->card; i++)
     {
         insere_cjt(novo, (c1->v)[i]);
     }
