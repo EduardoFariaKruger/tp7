@@ -22,6 +22,7 @@ struct conjunto *cria_cjt (int max)
     conjunto->card = 0;
     conjunto->ptr = 0;
     conjunto->v = *v;
+    return conjunto;
 }
 
 /*
@@ -29,14 +30,13 @@ struct conjunto *cria_cjt (int max)
  */
 struct conjunto *destroi_cjt (struct conjunto *c)
 {
-    int card;
-    for(int i=0; i <= card-1; i++)
+    for(int i=0; i <= c->card - 1; i++)
     {
         free((c->v)[i]);
-        card--;
     }
     free(c->v);
     free(c);
+    return NULL;
 }
 
 /*
@@ -70,6 +70,7 @@ int insere_cjt (struct conjunto *c, int elemento)
         }
         (c->v)[c->card] = elemento;
         c->card = c->card + 1;
+        return 1;
     }
     return 0;
 }
@@ -93,6 +94,7 @@ int retira_cjt (struct conjunto *c, int elemento)
     {
         (c->v)[i] = (c->v)[c->card - 1];
         c->card = c->card - 1;
+        return 1;
     }
 }
 
@@ -127,7 +129,7 @@ int contido_cjt (struct conjunto *c1, struct conjunto *c2)
             pertence = 0;
         }
     }
-    return pertence == 1;
+    return (pertence == 1);
 }
 
 /*
@@ -153,6 +155,7 @@ struct conjunto *diferenca_cjt (struct conjunto *c1, struct conjunto *c2)
             insere_cjt(novo, (c1->v)[c1->v[i]]);
         }
     }
+    return novo;
 }
 
 /*
@@ -170,6 +173,7 @@ struct conjunto *interseccao_cjt (struct conjunto *c1, struct conjunto *c2)
             insere_cjt(novo, (c1->v)[c1->v[i]]);
         }
     }
+    return novo;
 }
 
 /*
@@ -187,8 +191,6 @@ struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2)
             insere_cjt(novo, (c1->v)[c1->v[i]]);
         }
     }
-    struct conjunto *novo;
-    novo = cria_cjt(c2->card - 1);
     for (int i = 0; i < c2->card -1; i++)
     {
         if(pertence_cjt(c2, (c2->v)[i]))
@@ -228,7 +230,7 @@ struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
 {
 
     struct conjunto *novo;
-    if(n>=c)
+    if(n >= c->card)
     {
         novo = copia_cjt(c);
     }
@@ -256,9 +258,8 @@ struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
  */
 void imprime_cjt (struct conjunto *c)
 {
-    int tam = c->card;
-
     int *vetor = malloc((c->card) * sizeof(int));
+
     for(int i = 0; i < c->card - 1; i++)
     {
         vetor[i] = (c->v)[i];
@@ -268,7 +269,7 @@ void imprime_cjt (struct conjunto *c)
     while (h > 0)
     {
         h = (h - 1)/3;
-        for (int i = h; i < tam; i++)
+        for (int i = h; i < c->card - 1; i++)
         {
             aux = vetor[i];
             int j = i;
@@ -280,7 +281,7 @@ void imprime_cjt (struct conjunto *c)
             vetor[j] = aux;
         }
     }
-    for (int i = 0; i < tam; i++)
+    for (int i = 0; i < c->card - 1; i++)
     {
         printf("%d \n", vetor[i]);
     }
@@ -324,6 +325,6 @@ int incrementa_iterador_cjt (struct conjunto *c, int *ret_iterador)
  */
 int retira_um_elemento_cjt (struct conjunto *c)
 {
-    int aleat = rand() % c->card + 1;
+    int aleat = rand() % c->card;
     retira_cjt(c, (c->v)[aleat]);
 }
