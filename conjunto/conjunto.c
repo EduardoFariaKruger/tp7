@@ -99,16 +99,15 @@ int retira_cjt (struct conjunto *c, int elemento)
  */
 int pertence_cjt (struct conjunto *c, int elemento)
 {
-    int i = 0;
-    while ((i <= c->card) && ((c->v)[i] != elemento))
+    int pertence = 0;
+    for (int i=0; i < c->card; i++)
     {
-        i++;
+        if ((c->v)[i] == elemento)
+        {
+            pertence = 1;
+        }
     }
-    if (elemento != (c->v)[i])
-    {
-        return 0;
-    }
-    return 1;
+    return pertence;
 }
 
 /*
