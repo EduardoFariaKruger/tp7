@@ -120,6 +120,7 @@ int contido_cjt (struct conjunto *c1, struct conjunto *c2)
         {
             pertence = 0;
         }
+        i++;
     }
     return (pertence);
 }
@@ -140,7 +141,7 @@ struct conjunto *diferenca_cjt (struct conjunto *c1, struct conjunto *c2)
 {
     struct conjunto *novo;
     novo = cria_cjt(c1->card);
-    for (int i = 0; i < c1->card -1; i++)
+    for (int i = 0; i < c1->card; i++)
     {
         if(!pertence_cjt(c2, (c1->v)[i]))
         {
@@ -214,7 +215,7 @@ struct conjunto *copia_cjt (struct conjunto *c)
     novo->max = c->max;
     novo->ptr = c->ptr;
     novo->card = c->card;
-    for (int i=0; i <= novo->card - 1; i++)
+    for (int i=0; i < novo->card; i++)
     {
        (novo->v)[i] = (c->v)[i];
     }
