@@ -14,7 +14,7 @@ struct conjunto *cria_cjt (int max)
         return NULL;
     }
     int *v;
-    if(!(v = malloc(max * sizeof(int))))
+    if(!(v = (int*) malloc(max * sizeof(int))))
     {
         return NULL;
     }
