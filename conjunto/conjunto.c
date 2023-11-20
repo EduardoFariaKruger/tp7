@@ -236,13 +236,14 @@ struct conjunto *copia_cjt (struct conjunto *c)
 struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
 {
     struct conjunto *novo;
+
     if (n >= c->card)
     {
         novo = copia_cjt(c);
     }
     else if (n == 0)
     {
-        novo = cria_cjt(n);
+        novo = cria_cjt(0);  // Cria um conjunto vazio
     }
     else
     {
@@ -251,11 +252,18 @@ struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
         {
             return NULL;
         }
-        for (int i = 0; i <= n - 1; i++)
+        for (int i = 0; i < n; i++)
         {
-            insere_cjt(novo, (c->v)[rand() % c->card]); // <-- Corrigindo para usar c->card
+            int random_index = rand() % c->card;
+            if (!insere_cjt(novo, (c->v)[random_index]))
+            {
+                // Tratamento de erro, se a inserção falhar
+                destroi_cjt(novo);
+                return NULL;
+            }
         }
     }
+
     return novo;
 }
 
