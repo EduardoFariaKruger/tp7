@@ -194,6 +194,7 @@ struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2)
             insere_cjt(novo, (c1->v)[c2->v[i]]);
         }
     }
+    return novo;
 }
 
 /*
@@ -214,6 +215,7 @@ struct conjunto *copia_cjt (struct conjunto *c)
     {
        (novo->v)[i] = (c->v)[i];
     }
+    return novo;
 }
 
 /*
@@ -243,6 +245,7 @@ struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
     {
         insere_cjt(novo, (c->v)[rand() % n + 1]);
     }
+    return novo;
 }
 
 /*
@@ -323,4 +326,5 @@ int retira_um_elemento_cjt (struct conjunto *c)
 {
     int aleat = rand() % c->card;
     retira_cjt(c, (c->v)[aleat]);
+    return 1;
 }
