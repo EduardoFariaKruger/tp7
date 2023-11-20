@@ -192,11 +192,11 @@ struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2)
     novo = cria_cjt(c1->card);
     for (int i = 0; i < c1->card; i++)
     {
-        insere_cjt(novo, (c1->v)[(c1->v)[i]]);
+        insere_cjt(novo, (c1->v)[i]);
     }
     for (int i = 0; i < c2->card; i++)
     {
-        insere_cjt(novo, (c1->v)[(c2->v)[i]]);
+        insere_cjt(novo, (c1->v)[i]);
     }
     return novo;
 }
