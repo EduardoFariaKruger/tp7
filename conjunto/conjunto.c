@@ -271,7 +271,7 @@ void imprime_cjt (struct conjunto *c)
         }
         (c->v)[j + 1] = (c->v)[0];
     }
-    for (int i = 0; i < c->card; i++)
+    for (int i = 0; i < c->card - 1; i++)
     {
         printf("%d \n", (c->v)[i]);
     }
