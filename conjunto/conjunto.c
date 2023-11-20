@@ -261,21 +261,20 @@ struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
  */
 void imprime_cjt (struct conjunto *c)
 {
-    for (int i = 0; i < c->card; i++)
-    {
-        int p = i;
-        for (int j = i+1; j < c->card; j++)
-        {
-            if ((c->v)[j] < (c->v)[p])
-            {
-                p = j;
-            }
+    int i, key, j;
+    for (i = 1; i < c->card; i++) {
+        key = (c->v)[i];
+        j = i - 1;
+
+        // Move os elementos do arr[0..i-1] que são maiores que key
+        // para uma posição à frente de sua posição atual
+        while (j >= 0 && (c->v)[j] > key) {
+            (c->v)[j + 1] = (c->v)[j];
+            j = j - 1;
         }
-        int aux = (c->v)[i];
-        (c->v)[i] = (c->v)[p];
-        (c->v)[p] = aux;
+        (c->v)[j + 1] = key;
     }
-    for(int i=0; i < c->card; i++)
+    for (int i = 0; i < c->card; i++)
     {
         printf("%d \n", (c->v)[i]);
     }
