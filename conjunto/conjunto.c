@@ -188,31 +188,15 @@ struct conjunto *interseccao_cjt (struct conjunto *c1, struct conjunto *c2)
  */
 struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2)
 {
-    if(c1->max > c2->max)
+    struct conjunto *novo = cria_cjt(c1->max);
+    for(int i=0; i < c1->card-1; i++)
     {
-        struct conjunto *novo = cria_cjt(c1->max);
-        for (int i = 0; i < c1->card; i++)
-        {
-            insere_cjt(novo, (c1->v)[i]);
-        }
-        for (int i = 0; i < c2->card; i++)
-        {
-            insere_cjt(novo, (c1->v)[i]);
-        }      
+        insere_cjt(novo, (c1->v)[i]);
     }
-    else
+    for(int i=0; i < c2->card-1; i++)
     {
-        struct conjunto *novo = cria_cjt(c2->max);
-        for (int i = 0; i < c1->card; i++)
-        {
-            insere_cjt(novo, (c1->v)[i]);
-        }
-        for (int i = 0; i < c2->card; i++)
-        {
-            insere_cjt(novo, (c1->v)[i]);
-        }
+        insere_cjt(novo, (c2->v)[i]);
     }
-
     return novo;
 }
 
