@@ -100,7 +100,7 @@ int retira_cjt (struct conjunto *c, int elemento)
 int pertence_cjt (struct conjunto *c, int elemento)
 {
     int i = 0;
-    while (i <= c->card && (c->v)[i] != elemento)
+    while ((i <= c->card) && ((c->v)[i] != elemento))
     {
         i++;
     }
@@ -148,7 +148,7 @@ struct conjunto *diferenca_cjt (struct conjunto *c1, struct conjunto *c2)
     {
         if(!pertence_cjt(c2, (c1->v)[i]))
         {
-            insere_cjt(novo, (c1->v)[c1->v[i]]);
+            insere_cjt(novo, (c1->v)[(c1->v)[i]]);
         }
     }
     return novo;
@@ -160,13 +160,28 @@ struct conjunto *diferenca_cjt (struct conjunto *c1, struct conjunto *c2)
  */
 struct conjunto *interseccao_cjt (struct conjunto *c1, struct conjunto *c2)
 {
+    struct conjunto *maior;
     struct conjunto *novo;
-    novo = cria_cjt(c1->card - 1);
-    for (int i = 0; i < c1->card -1; i++)
+    if (c1->card > c2->card)
     {
-        if(pertence_cjt(c2, (c1->v)[i]))
+        novo = cria_cjt(c1->card - 1);
+        for (int i = 0; i < c1->card -1; i++)
         {
-            insere_cjt(novo, (c1->v)[c1->v[i]]);
+            if(pertence_cjt(c2, (c1->v)[i]))
+            {
+                insere_cjt(novo, (c1->v)[(c1->v)[i]]);
+            }
+        }
+    }
+    else
+    {
+        novo = cria_cjt(c2->card - 1);
+        for (int i = 0; i < c2->card -1; i++)
+        {
+            if(pertence_cjt(c1, (c2->v)[i]))
+            {
+                insere_cjt(novo, (c2->v)[(c1->v)[i]]);
+            }
         }
     }
     return novo;
@@ -182,17 +197,11 @@ struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2)
     novo = cria_cjt(c1->card - 1);
     for (int i = 0; i < c1->card -1; i++)
     {
-        if(!pertence_cjt(c2, (c1->v)[i]))
-        {
-            insere_cjt(novo, (c1->v)[c1->v[i]]);
-        }
+        insere_cjt(novo, (c1->v)[(c1->v)[i]]);
     }
     for (int i = 0; i < c2->card -1; i++)
     {
-        if(pertence_cjt(c2, (c2->v)[i]))
-        {
-            insere_cjt(novo, (c1->v)[c2->v[i]]);
-        }
+        insere_cjt(novo, (c1->v)[(c2->v)[i]]);
     }
     return novo;
 }
@@ -257,12 +266,7 @@ struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
  */
 void imprime_cjt (struct conjunto *c)
 {
-    int *vetor = malloc((c->card) * sizeof(int));
-
-    for(int i = 0; i < c->card - 1; i++)
-    {
-        vetor[i] = (c->v)[i];
-    }
+    int *vetor = c->v;
     int h = 1;
     int aux;
     while (h > 0)
