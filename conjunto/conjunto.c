@@ -77,21 +77,18 @@ int insere_cjt (struct conjunto *c, int elemento)
  */
 int retira_cjt (struct conjunto *c, int elemento)
 {
-    int i = 0;
-    while (i <= c->card && (c->v)[i] != elemento)
+    if(pertence_cjt(c, elemento))
     {
-        i++;
+        for(int i=0; i < c->card)
+        {
+            if((c->v)[i] == elemento)
+            {
+                (c->v)[i] = (c->v)[c->card];
+                c->card = c->card - 1;
+            }
+        }
     }
-    if (elemento != (c->v)[i])
-    {
-        return 0;
-    }
-    else
-    {
-        (c->v)[i] = (c->v)[c->card - 1];
-        c->card = c->card - 1;
-        return 1;
-    }
+    return 0;
 }
 
 /*
