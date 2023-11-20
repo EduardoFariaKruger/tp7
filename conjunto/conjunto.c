@@ -79,7 +79,7 @@ int retira_cjt (struct conjunto *c, int elemento)
 {
     if(pertence_cjt(c, elemento))
     {
-        for(int i=0; i < c->card)
+        for(int i=0; i < c->card; i++)
         {
             if((c->v)[i] == elemento)
             {
