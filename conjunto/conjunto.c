@@ -85,6 +85,7 @@ int retira_cjt (struct conjunto *c, int elemento)
             {
                 c->card = c->card - 1;
                 (c->v)[i] = (c->v)[c->card];
+                return 1;
             }
         }
     }
