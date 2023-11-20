@@ -56,36 +56,36 @@ int cardinalidade_cjt (struct conjunto *c)
  * Retorna 1 se a operacao foi bem sucedida. Se tentar inserir elemento existente,
  * nao faz nada e retorna 1 tambem. Retorna 0 em caso de falha por falta de espaco.
  */
-int insere_cjt(struct conjunto *c, int elemento)
+int insere_cjt (struct conjunto *c, int elemento)
 {
-    if (c == NULL || pertence_cjt(c, elemento) || c->card >= c->max)
+    if(!pertence_cjt(c, elemento))
     {
-        return 0;
+        if(c->card > c->max)
+        {
+            return 0;
+        }
+        (c->v)[c->card] = elemento;
+        c->card = c->card + 1;
+        return 1;
     }
-
-    (c->v)[c->card] = elemento;
-    c->card = c->card + 1;
-    return 1;
+    return 0;
 }
 
 /*
  * Remove o elemento 'elemento' do conjunto caso ele exista.
  * Retorna 1 se a operacao foi bem sucedida e 0 se o elemento nao existe.
  */
-int retira_cjt(struct conjunto *c, int elemento)
+int retira_cjt (struct conjunto *c, int elemento)
 {
-    if (!pertence_cjt(c, elemento))
+    if(pertence_cjt(c, elemento))
     {
-        return 0;
-    }
-
-    for (int i = 0; i < c->card; i++)
-    {
-        if ((c->v)[i] == elemento)
+        for(int i=0; i < c->card; i++)
         {
-            c->card = c->card - 1;
-            (c->v)[i] = (c->v)[c->card];
-            return 1;
+            if((c->v)[i] == elemento)
+            {
+                c->card = c->card - 1;
+                (c->v)[i] = (c->v)[c->card];
+            }
         }
     }
     return 0;
@@ -187,24 +187,17 @@ struct conjunto *interseccao_cjt (struct conjunto *c1, struct conjunto *c2)
  * Cria e retorna o conjunto uniao entre os conjunto c1 e c2.
  * Retorna NULL se a operacao falhou.
  */
-struct conjunto *uniao_cjt(struct conjunto *c1, struct conjunto *c2)
+struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2)
 {
-    struct conjunto *novo = cria_cjt(c1->max + c2->max);
-
-    if (novo == NULL)
-    {
-        return NULL;
-    }
-
-    for (int i = 0; i < c1->card; i++)
+    struct conjunto *novo = cria_cjt(c1->max);
+    for(int i=0; i < c1->card; i++)
     {
         insere_cjt(novo, (c1->v)[i]);
     }
-    for (int i = 0; i < c2->card; i++)
+    for(int i=0; i < c2->card; i++)
     {
         insere_cjt(novo, (c2->v)[i]);
     }
-
     return novo;
 }
 
@@ -235,27 +228,27 @@ struct conjunto *copia_cjt (struct conjunto *c)
  * Se n >= cardinalidade (c) entao retorna o proprio conjunto c.
  * Supoe que a funcao srand () tenha sido chamada antes.
  */
-struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
+struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
 {
+
     struct conjunto *novo;
-
-    if (n >= cardinalidade_cjt(c))
+    if(n >= c->card)
     {
-        return copia_cjt(c);
+        novo = copia_cjt(c);
     }
-
+    if(n == 0)
+    {
+        novo = cria_cjt(n);
+    }
     novo = cria_cjt(n);
-
-    if (novo == NULL)
+    if(novo == NULL)
     {
         return NULL;
     }
-
-    for (int i = 0; i < n; i++)
+    for(int i = 0; i <= n-1; i++)
     {
-        insere_cjt(novo, (c->v)[rand() % cardinalidade_cjt(c)]);
+        insere_cjt(novo, (c->v)[rand() % n + 1]);
     }
-
     return novo;
 }
 
@@ -266,34 +259,23 @@ struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
  * em branco entre os elementos, sendo que apos o ultimo nao
  * deve haver espacos em branco. Ao final imprime um \n.
  */
-void imprime_cjt(struct conjunto *c)
+void imprime_cjt (struct conjunto *c)
 {
-    int *temp = malloc(c->card * sizeof(int));
-
-    for (int i = 0; i < c->card; i++)
-    {
-        temp[i] = (c->v)[i];
-    }
-
+    int *v = c->v;
     for (int i = 1; i < c->card; i++)
     {
-        temp[0] = temp[i];
+        v[0] = v[i];
         int j = i - 1;
-        while (temp[0] < temp[j])
-        {
-            temp[j + 1] = temp[j];
-            j--;
+        while (v[0] < v[j]) {
+        v[j + 1] = v[j];
+        j--;
         }
-        temp[j + 1] = temp[0];
+        v[j + 1] = v[0];
     }
-
     for (int i = 0; i < c->card; i++)
     {
-        printf("%d ", temp[i]);
+        printf("%d \n", v[i]);
     }
-
-    free(temp);
-    printf("\n");
 }
 
 /*
