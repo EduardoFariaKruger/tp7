@@ -229,26 +229,28 @@ struct conjunto *copia_cjt (struct conjunto *c)
  * Se n >= cardinalidade (c) entao retorna o proprio conjunto c.
  * Supoe que a funcao srand () tenha sido chamada antes.
  */
-struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
+struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
 {
-
     struct conjunto *novo;
-    if(n >= c->card)
+    if (n >= c->card)
     {
         novo = copia_cjt(c);
     }
-    if(n == 0)
+    else if (n == 0)
     {
         novo = cria_cjt(n);
     }
-    novo = cria_cjt(n);
-    if(novo == NULL)
+    else
     {
-        return NULL;
-    }
-    for(int i = 0; i <= n-1; i++)
-    {
-        insere_cjt(novo, (c->v)[rand() % n + 1]);
+        novo = cria_cjt(n);
+        if (novo == NULL)
+        {
+            return NULL;
+        }
+        for (int i = 0; i <= n - 1; i++)
+        {
+            insere_cjt(novo, (c->v)[rand() % c->card]); // <-- Corrigindo para usar c->card
+        }
     }
     return novo;
 }
