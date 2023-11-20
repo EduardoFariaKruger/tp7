@@ -243,7 +243,7 @@ struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
     }
     else if (n == 0)
     {
-        novo = cria_cjt(0);  // Cria um conjunto vazio
+        novo = cria_cjt(0); // Corrigindo para criar um conjunto vazio
     }
     else
     {
@@ -252,16 +252,27 @@ struct conjunto *cria_subcjt_cjt(struct conjunto *c, int n)
         {
             return NULL;
         }
+
+        int *temp = malloc(c->card * sizeof(int));
+
+        if (temp == NULL)
+        {
+            free(novo);
+            return NULL;
+        }
+
+        for (int i = 0; i < c->card; i++)
+        {
+            temp[i] = (c->v)[i];
+        }
+
         for (int i = 0; i < n; i++)
         {
-            int random_index = rand() % c->card;
-            if (!insere_cjt(novo, (c->v)[random_index]))
-            {
-                // Tratamento de erro, se a inserção falhar
-                destroi_cjt(novo);
-                return NULL;
-            }
+            int index = rand() % c->card;
+            (novo->v)[i] = temp[index];
         }
+
+        free(temp);
     }
 
     return novo;
