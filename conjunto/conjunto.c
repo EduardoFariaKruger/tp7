@@ -322,6 +322,7 @@ int incrementa_iterador_cjt(struct conjunto *c, int *ret_iterador) {
 int retira_um_elemento_cjt (struct conjunto *c)
 {
     int aleat = rand() % c->card;
-    retira_cjt(c, (c->v)[aleat]);
-    return 1;
+    int elem = (c->v)[aleat];
+    retira_cjt(c, elem);
+    return elem;
 }
