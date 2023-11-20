@@ -21,7 +21,7 @@ struct conjunto *cria_cjt (int max)
     conjunto->max = max;
     conjunto->card = 0;
     conjunto->ptr = 0;
-    conjunto->v = *v;
+    conjunto->v = v;
     return conjunto;
 }
 
