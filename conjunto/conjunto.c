@@ -303,14 +303,14 @@ void inicia_iterador_cjt (struct conjunto *c)
  * A funcao retorna 0 caso o iterador ultrapasse o ultimo elemento, ou retorna
  * 1 caso o iterador aponte para um elemento valido (dentro do conjunto).
  */
-int incrementa_iterador_cjt (struct conjunto *c, int *ret_iterador)
-{
-    ret_iterador = &(c->v)[c->ptr];
-    if((c->ptr + 1) > c->max)
-    {
-        return 0;
+int incrementa_iterador_cjt(struct conjunto *c, int *ret_iterador) {
+    if (c->ptr < c->card) {
+        *ret_iterador = (c->v)[c->ptr];
+        (c->ptr)++;
+        return 1;
+    } else {
+        return 0;  // Retorna 0 quando o iterador ultrapassa o último elemento
     }
-    return 1;
 }
 
 /*
