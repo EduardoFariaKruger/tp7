@@ -261,17 +261,24 @@ struct conjunto *cria_subcjt_cjt (struct conjunto *c, int n)
  */
 void imprime_cjt (struct conjunto *c)
 {
-    for (int i = 1; i < c->card; i++)
+    int h = 1;
+    int aux;
+    while (h > 0)
     {
-        (c->v)[0] = (c->v)[i];
-        int j = i - 1;
-        while ((c->v)[0] < (c->v)[j]) {
-        (c->v)[j + 1] = (c->v)[j];
-        j--;
+        h = (h - 1)/3;
+        for (int i = h; i < (c->card); i++)
+        {
+            aux = (c->v)[i];
+            int j = i;
+            while (j > (h -1) && (c->v)[j - h] > aux)
+            {
+                (c->v)[j] = (c->v)[j - h];
+                j = j - h;
+            }
+            (c->v)[j] = aux;
         }
-        (c->v)[j + 1] = (c->v)[0];
     }
-    for (int i = 0; i < c->card - 1; i++)
+    for(int i=0; i < c->card; i++)
     {
         printf("%d \n", (c->v)[i]);
     }
