@@ -264,7 +264,7 @@ void imprime_cjt (struct conjunto *c)
     for (int i = 0; i < c->card; i++)
     {
         int p = i;
-        for (int j = i+1; j < n; j++)
+        for (int j = i+1; j < c->card; j++)
         {
             if ((c->v)[j] < (c->v)[p])
             {
