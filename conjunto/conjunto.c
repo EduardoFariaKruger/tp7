@@ -30,10 +30,6 @@ struct conjunto *cria_cjt (int max)
  */
 struct conjunto *destroi_cjt (struct conjunto *c)
 {
-    for(int i=0; i <= c->card - 1; i++)
-    {
-        free((c->v)[i]);
-    }
     free(c->v);
     free(c);
     return NULL;
