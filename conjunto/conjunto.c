@@ -271,7 +271,7 @@ void imprime_cjt (struct conjunto *c)
     while (h > 0)
     {
         h = (h - 1)/3;
-        for (int i = h; i < c->card - 1; i++)
+        for (int i = h; i < c->card; i++)
         {
             aux = vetor[i];
             int j = i;
