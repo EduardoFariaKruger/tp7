@@ -189,7 +189,7 @@ struct conjunto *interseccao_cjt (struct conjunto *c1, struct conjunto *c2)
 struct conjunto *uniao_cjt (struct conjunto *c1, struct conjunto *c2)
 {
     struct conjunto *novo;
-    novo = cria_cjt(c1->card - 1);
+    novo = cria_cjt(c1->max);
     for (int i = 0; i < c1->card - 1; i++)
     {
         insere_cjt(novo, (c1->v)[i]);
