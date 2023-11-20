@@ -83,8 +83,8 @@ int retira_cjt (struct conjunto *c, int elemento)
         {
             if((c->v)[i] == elemento)
             {
-                (c->v)[i] = (c->v)[c->card];
                 c->card = c->card - 1;
+                (c->v)[i] = (c->v)[c->card];
             }
         }
     }
